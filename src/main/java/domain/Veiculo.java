@@ -1,9 +1,18 @@
 package domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Objects;
+
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -11,12 +20,12 @@ import javax.persistence.Transient;
 @Table(name = "tab_veiculo")
 public class Veiculo {
 	
-	//@Id
-	//@GeneratedValue(strategy = GenerationType.IDENTITY)
-	//private long codigo;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 	
-	@EmbeddedId
-	private VeiculoId codigo;
+	//@EmbeddedId
+	//private VeiculoId codigo;
 	
 	@Column(length = 60, nullable = false)
 	private String fabricante;
@@ -36,12 +45,26 @@ public class Veiculo {
 	@Transient
 	private String descricaoCompleta;
 	
+	@Column(name="tipo_combustivel", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private TipoCombustivel tipoCombustivel;
+	
+	@Column(name="data_cadastro", nullable = false)
+	private LocalDate dataCadastro;
+	
+	@Lob
+	private String especificacoes;
+	
+	@Lob
+	private byte[] foto;
+	
 	public Veiculo() {
 		
 	}
 
-	public Veiculo(VeiculoId codigo, String fabricante, String modelo, int anoFabricacao, int anoModelo,
-			BigDecimal valor, String descricaoCompleta) {
+	public Veiculo(Long codigo, String fabricante, String modelo, int anoFabricacao, int anoModelo, BigDecimal valor,
+			String descricaoCompleta, TipoCombustivel tipoCombustivel, LocalDate dataCadastro, String especificacoes,
+			byte[] foto) {
 		super();
 		this.codigo = codigo;
 		this.fabricante = fabricante;
@@ -50,13 +73,17 @@ public class Veiculo {
 		this.anoModelo = anoModelo;
 		this.valor = valor;
 		this.descricaoCompleta = descricaoCompleta;
+		this.tipoCombustivel = tipoCombustivel;
+		this.dataCadastro = dataCadastro;
+		this.especificacoes = especificacoes;
+		this.foto = foto;
 	}
-	
-	public VeiculoId getCodigo() {
+
+	public Long getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(VeiculoId codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 
@@ -108,25 +135,53 @@ public class Veiculo {
 		this.descricaoCompleta = descricaoCompleta;
 	}
 
+	public TipoCombustivel getTipoCombustivel() {
+		return tipoCombustivel;
+	}
+
+	public void setTipoCombustivel(TipoCombustivel tipoCombustivel) {
+		this.tipoCombustivel = tipoCombustivel;
+	}
+
+	public LocalDate getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDate dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
 	
+	public String getEspecificacoes() {
+		return especificacoes;
+	}
+
+	public void setEspecificacoes(String especificacoes) {
+		this.especificacoes = especificacoes;
+	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+
 	@Override
 	public String toString() {
 		return "Veiculo [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", anoFabricacao="
 				+ anoFabricacao + ", anoModelo=" + anoModelo + ", valor=" + valor + ", descricaoCompleta="
-				+ descricaoCompleta + "]";
+				+ descricaoCompleta + ", tipoCombustivel=" + tipoCombustivel + ", dataCadastro=" + dataCadastro
+				+ ", especificacoes=" + especificacoes + ", foto=" + Arrays.toString(foto) + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + anoFabricacao;
-		result = prime * result + anoModelo;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		result = prime * result + ((descricaoCompleta == null) ? 0 : descricaoCompleta.hashCode());
-		result = prime * result + ((fabricante == null) ? 0 : fabricante.hashCode());
-		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
-		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		result = prime * result + Arrays.hashCode(foto);
+		result = prime * result + Objects.hash(anoFabricacao, anoModelo, codigo, dataCadastro, descricaoCompleta,
+				especificacoes, fabricante, modelo, tipoCombustivel, valor);
 		return result;
 	}
 
@@ -139,36 +194,12 @@ public class Veiculo {
 		if (getClass() != obj.getClass())
 			return false;
 		Veiculo other = (Veiculo) obj;
-		if (anoFabricacao != other.anoFabricacao)
-			return false;
-		if (anoModelo != other.anoModelo)
-			return false;
-		if (codigo == null) {
-			if (other.codigo != null)
-				return false;
-		} else if (!codigo.equals(other.codigo))
-			return false;
-		if (descricaoCompleta == null) {
-			if (other.descricaoCompleta != null)
-				return false;
-		} else if (!descricaoCompleta.equals(other.descricaoCompleta))
-			return false;
-		if (fabricante == null) {
-			if (other.fabricante != null)
-				return false;
-		} else if (!fabricante.equals(other.fabricante))
-			return false;
-		if (modelo == null) {
-			if (other.modelo != null)
-				return false;
-		} else if (!modelo.equals(other.modelo))
-			return false;
-		if (valor == null) {
-			if (other.valor != null)
-				return false;
-		} else if (!valor.equals(other.valor))
-			return false;
-		return true;
+		return anoFabricacao == other.anoFabricacao && anoModelo == other.anoModelo
+				&& Objects.equals(codigo, other.codigo) && Objects.equals(dataCadastro, other.dataCadastro)
+				&& Objects.equals(descricaoCompleta, other.descricaoCompleta)
+				&& Objects.equals(especificacoes, other.especificacoes) && Objects.equals(fabricante, other.fabricante)
+				&& Arrays.equals(foto, other.foto) && Objects.equals(modelo, other.modelo)
+				&& tipoCombustivel == other.tipoCombustivel && Objects.equals(valor, other.valor);
 	}
 
 }

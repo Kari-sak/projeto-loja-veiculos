@@ -1,13 +1,14 @@
 package aplicacao;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import domain.TipoCombustivel;
 import domain.Veiculo;
-import domain.VeiculoId;
 
 public class Programa {
 
@@ -19,17 +20,42 @@ public class Programa {
 		
 		em.getTransaction().begin();
 		
-		Veiculo v1 = new Veiculo();
-		v1.setCodigo(new VeiculoId("ABC-1234", "Uberlândia"));
-		v1.setFabricante("Honda");
-		v1.setModelo("Civic");
-		v1.setAnoFabricacao(2020);
-		v1.setAnoModelo(2020);
-		v1.setValor(new BigDecimal(90500));
-		v1.setDescricaoCompleta("Descrição completa...");
+		//Veiculo v1 = new Veiculo();
+		//v1.setCodigo(new VeiculoId("ABC-1234", "Uberlândia"));
+		//v1.setFabricante("Honda");
+		//v1.setModelo("Civic");
+		//v1.setAnoFabricacao(2020);
+		//v1.setAnoModelo(2020);
+		//v1.setValor(new BigDecimal(90500));
+		//v1.setDescricaoCompleta("Descrição completa...");
+		//v1.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
+		//v1.setDataCadastro(LocalDate.of(2021,02,23));
 		
-		em.persist(v1);
+		StringBuilder especificacoes = new StringBuilder();
+		especificacoes.append("Carro em excelente estado.\n");
+		especificacoes.append("Completo, menos ar.\n");
+		especificacoes.append("Primeiro dono, com manual de instrução \n");
+		especificacoes.append("e todas as revisões feitas.\n");
+		especificacoes.append("IPVA pago, aceita financiamento.");
+		
+		Veiculo veiculo = new Veiculo();
+		veiculo.setFabricante("VW");
+		veiculo.setModelo("Gol");
+		veiculo.setAnoFabricacao(2018);
+		veiculo.setAnoModelo(2019);
+		veiculo.setValor(new BigDecimal(17_200));
+		veiculo.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
+		veiculo.setDataCadastro(LocalDate.now());
+		veiculo.setEspecificacoes(especificacoes.toString());
+		
+		em.persist(veiculo);
 		em.getTransaction().commit();
+		
+		em.detach(veiculo);
+		Veiculo veiculo2 = em.find(Veiculo.class, veiculo.getCodigo());
+		System.out.println("Veículo: " + veiculo2.getModelo());
+		System.out.println("-------");
+		System.out.println(veiculo2.getEspecificacoes());
 		
 		System.out.println("pronto!");
 		em.close();

@@ -16,7 +16,6 @@ public class VeiculoId implements Serializable {
 	}
 
 	public VeiculoId(String placa, String cidade) {
-		super();
 		this.placa = placa;
 		this.cidade = cidade;
 	}
@@ -37,7 +36,10 @@ public class VeiculoId implements Serializable {
 		this.cidade = cidade;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "VeiculoId [placa=" + placa + ", cidade=" + cidade + "]";
+	}
 
 	@Override
 	public int hashCode() {
