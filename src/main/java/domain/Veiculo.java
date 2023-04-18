@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -52,19 +54,25 @@ public class Veiculo {
 	@Column(name="data_cadastro", nullable = false)
 	private LocalDate dataCadastro;
 	
-	@Lob
-	private String especificacoes;
+	//@Lob
+	//private String especificacoes;
 	
-	@Lob
-	private byte[] foto;
+	//@Lob
+	//private byte[] foto;
+	
+	//@Embedded
+	//private ProprietarioEmbedded proprietario;
+	
+	@OneToOne
+	private Proprietario proprietario;
 	
 	public Veiculo() {
 		
 	}
 
 	public Veiculo(Long codigo, String fabricante, String modelo, int anoFabricacao, int anoModelo, BigDecimal valor,
-			String descricaoCompleta, TipoCombustivel tipoCombustivel, LocalDate dataCadastro, String especificacoes,
-			byte[] foto) {
+			String descricaoCompleta, TipoCombustivel tipoCombustivel, LocalDate dataCadastro,
+			Proprietario proprietario) {
 		super();
 		this.codigo = codigo;
 		this.fabricante = fabricante;
@@ -75,8 +83,7 @@ public class Veiculo {
 		this.descricaoCompleta = descricaoCompleta;
 		this.tipoCombustivel = tipoCombustivel;
 		this.dataCadastro = dataCadastro;
-		this.especificacoes = especificacoes;
-		this.foto = foto;
+		this.proprietario = proprietario;
 	}
 
 	public Long getCodigo() {
@@ -150,21 +157,13 @@ public class Veiculo {
 	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
-	public String getEspecificacoes() {
-		return especificacoes;
+
+	public Proprietario getProprietario() {
+		return proprietario;
 	}
 
-	public void setEspecificacoes(String especificacoes) {
-		this.especificacoes = especificacoes;
-	}
-
-	public byte[] getFoto() {
-		return foto;
-	}
-
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
+	public void setProprietario(Proprietario proprietario) {
+		this.proprietario = proprietario;
 	}
 
 	@Override
@@ -172,17 +171,13 @@ public class Veiculo {
 		return "Veiculo [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", anoFabricacao="
 				+ anoFabricacao + ", anoModelo=" + anoModelo + ", valor=" + valor + ", descricaoCompleta="
 				+ descricaoCompleta + ", tipoCombustivel=" + tipoCombustivel + ", dataCadastro=" + dataCadastro
-				+ ", especificacoes=" + especificacoes + ", foto=" + Arrays.toString(foto) + "]";
+				+ ", proprietario=" + proprietario + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.hashCode(foto);
-		result = prime * result + Objects.hash(anoFabricacao, anoModelo, codigo, dataCadastro, descricaoCompleta,
-				especificacoes, fabricante, modelo, tipoCombustivel, valor);
-		return result;
+		return Objects.hash(anoFabricacao, anoModelo, codigo, dataCadastro, descricaoCompleta, fabricante, modelo,
+				proprietario, tipoCombustivel, valor);
 	}
 
 	@Override
@@ -197,9 +192,9 @@ public class Veiculo {
 		return anoFabricacao == other.anoFabricacao && anoModelo == other.anoModelo
 				&& Objects.equals(codigo, other.codigo) && Objects.equals(dataCadastro, other.dataCadastro)
 				&& Objects.equals(descricaoCompleta, other.descricaoCompleta)
-				&& Objects.equals(especificacoes, other.especificacoes) && Objects.equals(fabricante, other.fabricante)
-				&& Arrays.equals(foto, other.foto) && Objects.equals(modelo, other.modelo)
-				&& tipoCombustivel == other.tipoCombustivel && Objects.equals(valor, other.valor);
+				&& Objects.equals(fabricante, other.fabricante) && Objects.equals(modelo, other.modelo)
+				&& Objects.equals(proprietario, other.proprietario) && tipoCombustivel == other.tipoCombustivel
+				&& Objects.equals(valor, other.valor);
 	}
 
 }
