@@ -29,23 +29,25 @@ public class Proprietario {
 	@Column(length = 255)
 	private String email;
 	
+	//@OneToOne
 	//@OneToOne(mappedBy = "proprietario")
 	//private Veiculo veiculo;
 	
-	//@OneToMany(mappedBy = "proprietario")
-	//private List<Veiculo> veiculos;
+	@OneToMany(mappedBy = "proprietario")
+	private List<Veiculo> veiculos;
 	
 	public Proprietario() {
 	}
 
-	public Proprietario(Long codigo, String nome, String telefone, String email) {
+	public Proprietario(Long codigo, String nome, String telefone, String email, List<Veiculo> veiculos) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.email = email;
+		this.veiculos = veiculos;
 	}
-	
+
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -78,9 +80,17 @@ public class Proprietario {
 		this.email = email;
 	}
 
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(codigo, email, nome, telefone);
+		return Objects.hash(codigo, email, nome, telefone, veiculos);
 	}
 
 	@Override
@@ -93,7 +103,8 @@ public class Proprietario {
 			return false;
 		Proprietario other = (Proprietario) obj;
 		return Objects.equals(codigo, other.codigo) && Objects.equals(email, other.email)
-				&& Objects.equals(nome, other.nome) && Objects.equals(telefone, other.telefone);
+				&& Objects.equals(nome, other.nome) && Objects.equals(telefone, other.telefone)
+				&& Objects.equals(veiculos, other.veiculos);
 	}
 	
 }

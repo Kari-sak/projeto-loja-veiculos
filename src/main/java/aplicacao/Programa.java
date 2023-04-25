@@ -68,25 +68,54 @@ public class Programa {
 		//veiculo.setProprietario(proprietario);
 		
 		
+		//Proprietario proprietario = new Proprietario();
+		//proprietario.setNome("João das Couves");
+		//proprietario.setTelefone("(34) 1234-5678");
+		
+		// Basta incluir essa linha abaixo para persistir o proprietário.
+		//em.persist(proprietario);
+		
+		//Veiculo veiculo = new Veiculo();
+		//veiculo.setFabricante("VW");
+		//veiculo.setModelo("Gol");
+		//veiculo.setAnoFabricacao(2018);
+		//veiculo.setAnoModelo(2018);
+		//veiculo.setValor(new BigDecimal(17_200));
+		//veiculo.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
+		//veiculo.setDataCadastro(LocalDate.now());
+		//veiculo.setProprietario(proprietario);
+		
+		//em.persist(veiculo);
+
 		Proprietario proprietario = new Proprietario();
 		proprietario.setNome("João das Couves");
 		proprietario.setTelefone("(34) 1234-5678");
 		
 		// Basta incluir essa linha abaixo para persistir o proprietário.
 		em.persist(proprietario);
+		Veiculo veiculo1 = new Veiculo();
+		veiculo1.setFabricante("GM");
+		veiculo1.setModelo("Celta");
+		veiculo1.setAnoFabricacao(2015);
+		veiculo1.setAnoModelo(2015);
+		veiculo1.setValor(new BigDecimal(11_000));
+		veiculo1.setTipoCombustivel(TipoCombustivel.GASOLINA);
+		veiculo1.setDataCadastro(LocalDate.now());
+		veiculo1.setProprietario(proprietario);
+		em.persist(veiculo1);		
 		
-		Veiculo veiculo = new Veiculo();
-		veiculo.setFabricante("VW");
-		veiculo.setModelo("Gol");
-		veiculo.setAnoFabricacao(2018);
-		veiculo.setAnoModelo(2018);
-		veiculo.setValor(new BigDecimal(17_200));
-		veiculo.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
-		veiculo.setDataCadastro(LocalDate.now());
-		veiculo.setProprietario(proprietario);
+		Veiculo veiculo2 = new Veiculo();
+		veiculo2.setFabricante("VW");
+		veiculo2.setModelo("Gol");
+		veiculo2.setAnoFabricacao(2018);
+		veiculo2.setAnoModelo(2018);
+		veiculo2.setValor(new BigDecimal(17_200));
+		veiculo2.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
+		veiculo2.setDataCadastro(LocalDate.now());
+		veiculo2.setProprietario(proprietario);
 		
-		em.persist(veiculo);
-
+		em.persist(veiculo2);		
+		
 		em.getTransaction().commit();
 		
 		//em.detach(veiculo);

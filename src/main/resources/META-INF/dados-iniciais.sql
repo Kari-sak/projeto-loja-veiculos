@@ -27,3 +27,9 @@ nome_proprietario, telefone_proprietario) values ('VW', 'Gol',
 '34 9 3333 3333');
 
 commit;
+
+insert into tab_veiculo (fabricante, modelo,
+ano_fabricacao, ano_modelo, valor, tipo_combustivel,
+data_cadastro, proprietario_codigo) values ('Ford', 'Ka',
+2018, 2019, 27000, 'BIOCOMBUSTIVEL', sysdate, 1);
+commit;
