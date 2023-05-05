@@ -33,3 +33,35 @@ ano_fabricacao, ano_modelo, valor, tipo_combustivel,
 data_cadastro, proprietario_codigo) values ('Ford', 'Ka',
 2018, 2019, 27000, 'BIOCOMBUSTIVEL', sysdate, 1);
 commit;
+
+insert into acessorio (descricao) values ('Direção hidráulica');
+insert into acessorio (descricao) values ('Alarme');
+insert into acessorio (descricao) values ('Ar condicionado');
+insert into acessorio (descricao) values ('Bancos de couro');
+commit;
+
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 5);
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 6);
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 7);
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 8);
+commit;
+
+insert into acessorio (codigo, descricao) values (1, 'Direção hidráulica');
+insert into acessorio (codigo, descricao) values (2, 'Alarme');
+insert into acessorio (codigo, descricao) values (3, 'Ar condicionado');
+insert into acessorio (codigo, descricao) values (4, 'Bancos de couro');
+commit;
+
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 1);
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 2);
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 3);
+insert into veiculo_acessorio (veiculo_codigo, acessorio_codigo)
+values (1, 4);
+commit;

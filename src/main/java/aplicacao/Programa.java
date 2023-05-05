@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import domain.Acessorio;
 import domain.Proprietario;
 import domain.ProprietarioEmbedded;
 import domain.TipoCombustivel;
@@ -87,34 +88,75 @@ public class Programa {
 		
 		//em.persist(veiculo);
 
-		Proprietario proprietario = new Proprietario();
-		proprietario.setNome("João das Couves");
-		proprietario.setTelefone("(34) 1234-5678");
+		//Proprietario proprietario = new Proprietario();
+		//proprietario.setNome("João das Couves");
+		//proprietario.setTelefone("(34) 1234-5678");
 		
-		// Basta incluir essa linha abaixo para persistir o proprietário.
-		em.persist(proprietario);
+		//Basta incluir essa linha abaixo para persistir o proprietário.
+		//em.persist(proprietario);
+		//Veiculo veiculo1 = new Veiculo();
+		//veiculo1.setFabricante("GM");
+		//veiculo1.setModelo("Celta");
+		//veiculo1.setAnoFabricacao(2015);
+		//veiculo1.setAnoModelo(2015);
+		//veiculo1.setValor(new BigDecimal(11_000));
+		//veiculo1.setTipoCombustivel(TipoCombustivel.GASOLINA);
+		//veiculo1.setDataCadastro(LocalDate.now());
+		//veiculo1.setProprietario(proprietario);
+		//em.persist(veiculo1);		
+		
+		//Veiculo veiculo2 = new Veiculo();
+		//veiculo2.setFabricante("VW");
+		//veiculo2.setModelo("Gol");
+		//veiculo2.setAnoFabricacao(2018);
+		//veiculo2.setAnoModelo(2018);
+		//veiculo2.setValor(new BigDecimal(17_200));
+		//veiculo2.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
+		//veiculo2.setDataCadastro(LocalDate.now());
+		//veiculo2.setProprietario(proprietario);
+		
+		//em.persist(veiculo2);		
+		
+		Acessorio roda = new Acessorio();
+		roda.setDescricao("Rodas de liga leve");
+		Acessorio sensor = new Acessorio();
+		sensor.setDescricao("Sensores de estacionamento");
+		Acessorio mp3 = new Acessorio();
+		mp3.setDescricao("MP3 Player");
+		Acessorio pintura = new Acessorio();
+		pintura.setDescricao("Pintura metalizada");
+		
+		em.persist(roda);
+		em.persist(sensor);
+		em.persist(mp3);
+		em.persist(pintura);
+		
 		Veiculo veiculo1 = new Veiculo();
-		veiculo1.setFabricante("GM");
-		veiculo1.setModelo("Celta");
-		veiculo1.setAnoFabricacao(2015);
-		veiculo1.setAnoModelo(2015);
-		veiculo1.setValor(new BigDecimal(11_000));
-		veiculo1.setTipoCombustivel(TipoCombustivel.GASOLINA);
+		veiculo1.setFabricante("VW");
+		veiculo1.setModelo("Gol");
+		veiculo1.setAnoFabricacao(2018);
+		veiculo1.setAnoModelo(2018);
+		veiculo1.setValor(new BigDecimal(17_200));
+		veiculo1.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
 		veiculo1.setDataCadastro(LocalDate.now());
-		veiculo1.setProprietario(proprietario);
-		em.persist(veiculo1);		
+		veiculo1.getAcessorios().add(roda);
+		veiculo1.getAcessorios().add(mp3);
 		
 		Veiculo veiculo2 = new Veiculo();
-		veiculo2.setFabricante("VW");
-		veiculo2.setModelo("Gol");
-		veiculo2.setAnoFabricacao(2018);
-		veiculo2.setAnoModelo(2018);
-		veiculo2.setValor(new BigDecimal(17_200));
+		veiculo2.setFabricante("Hyundai");
+		veiculo2.setModelo("i30");
+		veiculo2.setAnoFabricacao(2019);
+		veiculo2.setAnoModelo(2019);
+		veiculo2.setValor(new BigDecimal(53_500));
 		veiculo2.setTipoCombustivel(TipoCombustivel.BIOCOMBUSTIVEL);
 		veiculo2.setDataCadastro(LocalDate.now());
-		veiculo2.setProprietario(proprietario);
+		veiculo2.getAcessorios().add(roda);
+		veiculo2.getAcessorios().add(sensor);
+		veiculo2.getAcessorios().add(mp3);
+		veiculo2.getAcessorios().add(pintura);
 		
-		em.persist(veiculo2);		
+		em.persist(veiculo1);
+		em.persist(veiculo2);	
 		
 		em.getTransaction().commit();
 		

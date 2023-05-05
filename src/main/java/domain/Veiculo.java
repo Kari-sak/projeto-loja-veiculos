@@ -3,7 +3,9 @@ package domain;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -14,7 +16,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -69,9 +73,17 @@ public class Veiculo {
 	//@OneToOne(optional = false)
 	//@JoinColumn(name = "cod_proprietario")
 	
-	@ManyToOne
-	@JoinColumn(name = "proprietario_codigo")
-	private Proprietario proprietario;
+	//@ManyToOne
+	//@JoinColumn(name = "proprietario_codigo")
+	//private Proprietario proprietario;
+	
+	@ManyToMany
+	@JoinTable(name = "veiculo_acessorio",
+	joinColumns = @JoinColumn(name = "veiculo_codigo"),
+	inverseJoinColumns = @JoinColumn(name = "acessorio_codigo"))
+	private Set<Acessorio> acessorios = new HashSet<>();
+	
+	//Criando uma tabela associativa + foreign key
 	
 	public Veiculo() {
 		
@@ -79,7 +91,7 @@ public class Veiculo {
 
 	public Veiculo(Long codigo, String fabricante, String modelo, int anoFabricacao, int anoModelo, BigDecimal valor,
 			String descricaoCompleta, TipoCombustivel tipoCombustivel, LocalDate dataCadastro,
-			Proprietario proprietario) {
+			Set<Acessorio> acessorios) {
 		super();
 		this.codigo = codigo;
 		this.fabricante = fabricante;
@@ -90,7 +102,7 @@ public class Veiculo {
 		this.descricaoCompleta = descricaoCompleta;
 		this.tipoCombustivel = tipoCombustivel;
 		this.dataCadastro = dataCadastro;
-		this.proprietario = proprietario;
+		this.acessorios = acessorios;
 	}
 
 	public Long getCodigo() {
@@ -165,12 +177,12 @@ public class Veiculo {
 		this.dataCadastro = dataCadastro;
 	}
 
-	public Proprietario getProprietario() {
-		return proprietario;
+	public Set<Acessorio> getAcessorios() {
+		return acessorios;
 	}
 
-	public void setProprietario(Proprietario proprietario) {
-		this.proprietario = proprietario;
+	public void setAcessorios(Set<Acessorio> acessorios) {
+		this.acessorios = acessorios;
 	}
 
 	@Override
@@ -178,13 +190,13 @@ public class Veiculo {
 		return "Veiculo [codigo=" + codigo + ", fabricante=" + fabricante + ", modelo=" + modelo + ", anoFabricacao="
 				+ anoFabricacao + ", anoModelo=" + anoModelo + ", valor=" + valor + ", descricaoCompleta="
 				+ descricaoCompleta + ", tipoCombustivel=" + tipoCombustivel + ", dataCadastro=" + dataCadastro
-				+ ", proprietario=" + proprietario + "]";
+				+ ", acessorios=" + acessorios + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(anoFabricacao, anoModelo, codigo, dataCadastro, descricaoCompleta, fabricante, modelo,
-				proprietario, tipoCombustivel, valor);
+		return Objects.hash(acessorios, anoFabricacao, anoModelo, codigo, dataCadastro, descricaoCompleta, fabricante,
+				modelo, tipoCombustivel, valor);
 	}
 
 	@Override
@@ -196,12 +208,12 @@ public class Veiculo {
 		if (getClass() != obj.getClass())
 			return false;
 		Veiculo other = (Veiculo) obj;
-		return anoFabricacao == other.anoFabricacao && anoModelo == other.anoModelo
-				&& Objects.equals(codigo, other.codigo) && Objects.equals(dataCadastro, other.dataCadastro)
+		return Objects.equals(acessorios, other.acessorios) && anoFabricacao == other.anoFabricacao
+				&& anoModelo == other.anoModelo && Objects.equals(codigo, other.codigo)
+				&& Objects.equals(dataCadastro, other.dataCadastro)
 				&& Objects.equals(descricaoCompleta, other.descricaoCompleta)
 				&& Objects.equals(fabricante, other.fabricante) && Objects.equals(modelo, other.modelo)
-				&& Objects.equals(proprietario, other.proprietario) && tipoCombustivel == other.tipoCombustivel
-				&& Objects.equals(valor, other.valor);
+				&& tipoCombustivel == other.tipoCombustivel && Objects.equals(valor, other.valor);
 	}
-
+	
 }
